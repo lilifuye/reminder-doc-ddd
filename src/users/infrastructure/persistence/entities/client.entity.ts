@@ -1,5 +1,6 @@
-import { ClientType } from 'src/clients/domain/aggregates/client/client-type.enum';
-import { AuditTrailValue } from 'src/shared/infrastructure/persistence/values/audit-trail.value';
+
+import { AuditTrailValue } from 'src/shared/infrastructure/values/audit-trail.value';
+import { ClientType } from 'src/users/domain/aggregates/client/client-type.enum';
 import { Column, Entity, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
 
 @Entity('clients')

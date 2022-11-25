@@ -1,20 +1,20 @@
-import { UserId } from 'src/users/domain/aggregates/user/user-id.value';
+import { ClientId } from 'src/users/domain/aggregates/client/client-id.value';
 import { DateTime } from './date-time.value';
 
 export class AuditTrail {
   private readonly createdAt: DateTime;
-  private readonly createdBy: UserId;
+  private readonly createdBy: ClientId;
   private readonly updatedAt: DateTime;
-  private readonly updatedBy: UserId;
+  private readonly updatedBy: ClientId;
 
-  private constructor(createdAt: DateTime, createdBy: UserId, updatedAt: DateTime, updatedBy: UserId) {
+  private constructor(createdAt: DateTime, createdBy: ClientId, updatedAt: DateTime, updatedBy: ClientId) {
     this.createdAt = createdAt;
     this.createdBy = createdBy;
     this.updatedAt = updatedAt;
     this.updatedBy = updatedBy;
   }
 
-  public static from(createdAt: DateTime, createdBy: UserId, updatedAt: DateTime, updatedBy: UserId) {
+  public static from(createdAt: DateTime, createdBy: ClientId, updatedAt: DateTime, updatedBy: ClientId) {
     return new AuditTrail(createdAt, createdBy, updatedAt, updatedBy);
   }
 
@@ -22,7 +22,7 @@ export class AuditTrail {
     return this.createdAt;
   }
 
-  public getCreatedBy(): UserId {
+  public getCreatedBy(): ClientId {
     return this.createdBy;
   }
 
@@ -30,7 +30,7 @@ export class AuditTrail {
     return this.updatedAt;
   }
 
-  public getUpdatedBy(): UserId {
+  public getUpdatedBy(): ClientId {
     return this.updatedBy;
   }
 }

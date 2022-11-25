@@ -1,4 +1,5 @@
 import { EventsHandler } from "@nestjs/cqrs";
+import { CompanyRegistered } from "../domain/events/company-registered.event";
 
 
 @EventsHandler(CompanyRegistered)

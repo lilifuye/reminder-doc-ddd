@@ -3,8 +3,9 @@ import { Client } from './client.root.entity';
 import { Ruc } from '../../../../shared/domain/values/ruc.value';
 import { CompanyName } from 'src/shared/domain/values/company-name.value';
 import { AuditTrail } from 'src/shared/domain/values/audit-trail.value';
-import { ClientType } from 'src/clients/domain/aggregates/client/client-type.enum';
-import { CompanyRegistered } from 'src/clients/domain/events/company-registered.event';
+import { ClientType } from './client-type.enum';
+import { CompanyRegistered } from '../../events/company-registered.event';
+
 
 export class Company extends Client {
   private name: CompanyName;

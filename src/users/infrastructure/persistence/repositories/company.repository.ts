@@ -1,9 +1,9 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { Company } from "src/clients/domain/aggregates/client/company.entity";
-import { CompanyRepository } from "src/clients/domain/aggregates/client/company.repository";
 import { Repository } from "typeorm";
 import { CompanyEntity } from "../entities/company.entity";
 import { CompanyMapper } from '../../../application/mappers/company.mapper';
+import { CompanyRepository } from "src/users/domain/aggregates/client/company.repository";
+import { Company } from "src/users/domain/aggregates/client/company.entity";
 
 export class CompanyEntityRepository implements CompanyRepository  {
   constructor(

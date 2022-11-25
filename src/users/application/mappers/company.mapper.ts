@@ -1,19 +1,21 @@
-import { Company } from 'src/clients/domain/aggregates/client/company.entity';
-import { ClientId } from 'src/clients/domain/aggregates/client/client-id.value';
+
 import { Ruc } from 'src/shared/domain/values/ruc.value';
-import { CompanyFactory } from 'src/clients/domain/factories/company.factory';
 import { AuditTrail } from 'src/shared/domain/values/audit-trail.value';
 import { CompanyName } from 'src/shared/domain/values/company-name.value';
 import { DateTime } from 'src/shared/domain/values/date-time.value';
-import { AuditTrailValue } from 'src/shared/infrastructure/persistence/values/audit-trail.value';
+
 import { CompanyClientDto } from '../dtos/response/company-client.dto';
 import { RegisterCompany } from '../messages/commands/register-company.command';
 import { RegisterCompanyRequest } from '../dtos/request/register-company-request.dto';
 import { RegisterCompanyResponse } from '../dtos/response/register-company-response.dto';
-import { CompanyEntity } from 'src/clients/infrastructure/persistence/entities/company.entity';
-import { RucValue } from 'src/clients/infrastructure/persistence/values/ruc.value';
-import { CompanyNameValue } from 'src/clients/infrastructure/persistence/values/company-name.value';
-import { UserId } from 'src/users/domain/aggregates/user/user-id.value';
+import { Company } from 'src/users/domain/aggregates/client/company.entity';
+import { CompanyFactory } from 'src/users/domain/factories/company.factory';
+import { CompanyEntity } from 'src/users/infrastructure/persistence/entities/company.entity';
+import { CompanyNameValue } from 'src/users/infrastructure/persistence/values/company-name.value';
+import { RucValue } from 'src/users/infrastructure/persistence/values/ruc.value';
+import { AuditTrailValue } from 'src/shared/infrastructure/values/audit-trail.value';
+import { ClientId } from 'src/users/domain/aggregates/client/client-id.value';
+
 
 export class CompanyMapper {
   public static dtoRequestToCommand(registerCompanyRequest: RegisterCompanyRequest): RegisterCompany {
@@ -38,7 +40,7 @@ export class CompanyMapper {
     const ruc: Ruc = Ruc.create(command.ruc);
     const auditTrail: AuditTrail = AuditTrail.from(
       DateTime.utcNow(),
-      UserId.of(userId),
+      ClientId.of(userId),
       null,
       null
     );
@@ -65,9 +67,9 @@ export class CompanyMapper {
     const ruc: Ruc = Ruc.create(companyEntity.ruc.value);
     const auditTrail: AuditTrail = AuditTrail.from(
       companyEntity.auditTrail.createdAt != null ? DateTime.fromString(companyEntity.auditTrail.createdAt) : null,
-      companyEntity.auditTrail.createdBy != null ? UserId.of(companyEntity.auditTrail.createdBy) : null,
+      companyEntity.auditTrail.createdBy != null ? ClientId.of(companyEntity.auditTrail.createdBy) : null,
       companyEntity.auditTrail.updatedAt != null ? DateTime.fromString(companyEntity.auditTrail.updatedAt) : null,
-      companyEntity.auditTrail.updatedBy != null ? UserId.of(companyEntity.auditTrail.updatedBy) : null
+      companyEntity.auditTrail.updatedBy != null ? ClientId.of(companyEntity.auditTrail.updatedBy) : null
     );
     const clientId: ClientId = ClientId.of(companyEntity.id);
     let company: Company = CompanyFactory.withId(clientId, companyName, ruc, auditTrail);

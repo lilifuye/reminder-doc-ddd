@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
+import { ReminderController } from './reminder.controller';
+import { ReminderService } from './reminder.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: "mysql",
-      url: 'mysql://root:root@localhost:3306/banking-ddd-scratch',
+      url: 'mysql://root:rootMichelleFMB#gg123@localhost:3306/reminder-doc-ddd',
       migrationsRun: true,
       logging: true,
       timezone: '+00:00',
@@ -21,10 +20,9 @@ import { UsersModule } from './users/users.module';
         'dist/shared/infrastructure/persistence/migrations/*{.ts,.js}'
       ],
       migrationsTableName: "migrations"
-    }),
-    UsersModule
+    })
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [ReminderController],
+  providers: [ReminderService],
 })
-export class AppModule {}
+export class ReminderModule {}

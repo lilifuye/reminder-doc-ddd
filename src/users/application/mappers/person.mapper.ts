@@ -1,19 +1,19 @@
-import { Person } from 'src/clients/domain/aggregates/client/person.entity';
-import { AuditTrailValue } from 'src/shared/infrastructure/persistence/values/audit-trail.value';
 import { RegisterPerson } from '../messages/commands/register-person.command';
 import { PersonName } from 'src/shared/domain/values/person-name.value';
 import { Dni } from 'src/shared/domain/values/dni.value';
 import { AuditTrail } from 'src/shared/domain/values/audit-trail.value';
 import { DateTime } from 'src/shared/domain/values/date-time.value';
-import { PersonFactory } from 'src/clients/domain/factories/person.factory';
 import { PersonClientDto } from '../dtos/response/person-client.dto';
-import { ClientId } from 'src/clients/domain/aggregates/client/client-id.value';
 import { RegisterPersonRequest } from '../dtos/request/register-person-request.dto';
 import { RegisterPersonResponse } from '../dtos/response/register-person-response.dto';
-import { PersonEntity } from 'src/clients/infrastructure/persistence/entities/person.entity';
-import { PersonNameValue } from 'src/clients/infrastructure/persistence/values/person-name.value';
-import { DniValue } from 'src/clients/infrastructure/persistence/values/dni.value';
-import { UserId } from 'src/users/domain/aggregates/user/user-id.value';
+import { Person } from 'src/users/domain/aggregates/client/person.entity';
+import { PersonFactory } from 'src/users/domain/factories/person.factory';
+import { PersonEntity } from 'src/users/infrastructure/persistence/entities/person.entity';
+import { PersonNameValue } from 'src/users/infrastructure/persistence/values/person-name.value';
+import { DniValue } from 'src/users/infrastructure/persistence/values/dni.value';
+import { AuditTrailValue } from 'src/shared/infrastructure/values/audit-trail.value';
+import { ClientId } from 'src/users/domain/aggregates/client/client-id.value';
+
 
 export class PersonMapper {
   public static dtoRequestToCommand(registerPersonRequest: RegisterPersonRequest) {
@@ -40,7 +40,7 @@ export class PersonMapper {
     const dni: Dni = Dni.create(command.dni);
     const auditTrail: AuditTrail = AuditTrail.from(
       DateTime.utcNow(),
-      UserId.of(userId),
+      ClientId.of(userId),
       null,
       null
     );
@@ -67,9 +67,9 @@ export class PersonMapper {
     const dni: Dni = Dni.create(personEntity.dni.value);
     const auditTrail: AuditTrail = AuditTrail.from(
       personEntity.auditTrail.createdAt != null ? DateTime.fromString(personEntity.auditTrail.createdAt) : null,
-      personEntity.auditTrail.createdBy != null ? UserId.of(personEntity.auditTrail.createdBy) : null,
+      personEntity.auditTrail.createdBy != null ? ClientId.of(personEntity.auditTrail.createdBy) : null,
       personEntity.auditTrail.updatedAt != null ? DateTime.fromString(personEntity.auditTrail.updatedAt) : null,
-      personEntity.auditTrail.updatedBy != null ? UserId.of(personEntity.auditTrail.updatedBy) : null
+      personEntity.auditTrail.updatedBy != null ? ClientId.of(personEntity.auditTrail.updatedBy) : null
     );
     const clientId: ClientId = ClientId.of(personEntity.id);
     let person: Person = PersonFactory.withId(clientId, personName, dni, auditTrail);

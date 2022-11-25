@@ -1,10 +1,11 @@
-import { ClientType } from 'src/clients/domain/aggregates/client/client-type.enum';
-import { PersonRegistered } from 'src/clients/domain/events/person-registered.event';
+
 import { AuditTrail } from 'src/shared/domain/values/audit-trail.value';
 import { PersonName } from 'src/shared/domain/values/person-name.value';
 import { ClientId } from './client-id.value';
 import { Dni } from '../../../../shared/domain/values/dni.value';
 import { Client } from './client.root.entity';
+import { ClientType } from './client-type.enum';
+import { PersonRegistered } from '../../events/person-registered.event';
 
 export class Person extends Client {
   private name: PersonName;
